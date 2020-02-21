@@ -1,4 +1,5 @@
-require('dotenv').config;
+require('dotenv').config();
+const Pool = require('pg').Pool;
 const salasana = process.env.PGPASSWORD;
 const pguser = process.env.PGUSER;
 const pgdatabase = process.env.PGDATABASE;
@@ -11,13 +12,12 @@ const conopts = {
     database: pgdatabase
 }
 
-const Pool = require('pg').Pool;
 const allas = new Pool(conopts);
 
 const getTopics = (callback) => {
     allas.query("SELECT * FROM topics", (error, data) => {
-        console.dir(data.rows);
-        callback(data.rows);
+        console.dir(error);
+        callback(data.rows); //pelkästään (data) tulee tyhjää
     })
 }
 
