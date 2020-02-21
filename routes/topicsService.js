@@ -38,5 +38,19 @@ const insertTopic = (newtopic, callback) => {
     })
 }
 
+const deleteTopics = (callback) => {
+    allas.query("DELETE FROM topics", (error, data) => {
+        //console.dir(error);
+        callback(data.rows);
+    })
+}
 
-module.exports = {getTopics, getTopic, insertTopic};
+const deleteTopic = (id, callback) => {
+    allas.query("DELETE FROM topics WHERE id=$1", [id], (error, data) => {
+        if (error) throw error;
+        console.dir(data.rows);
+        callback(data.rowCount);
+    })
+}
+
+module.exports = {getTopics, getTopic, insertTopic, deleteTopic, deleteTopics};

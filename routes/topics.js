@@ -17,6 +17,11 @@ router.route('/topics')
         res.status(400).json({ message: 'Failed to insert' });
       }
     });
+  })
+  .delete(function (req, res, next) {
+    ts.deleteTopics(rows => {
+      res.json(rows);
+    });
   });
 
 router.route('/topics/:id')
@@ -25,5 +30,14 @@ router.route('/topics/:id')
       res.json(rows);
     });
   })
+  .delete(function (req, res, next) {
+    ts.deleteTopic(req.params.id, (rowCount) => {
+      if (rowCount > 0)
+        res.status(200).json({ message: 'Deleted' });
+      else {
+        res.status(400).json({ message: 'Failed to delete' });
+      }
+    });
+  });
 
 module.exports = router;
