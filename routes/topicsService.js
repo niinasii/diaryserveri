@@ -29,5 +29,14 @@ const getTopic = (id, callback) => {
     })
 }
 
+const insertTopic = (newtopic, callback) => {
+    const { title, description, timetomaster, timespent, source, learningdatestart, inprogress, completiondate } = newtopic;
+    allas.query("INSERT INTO topics (title, description, timetomaster, timespent, source, learningdatestart, inprogress, completiondate) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [title, description, timetomaster, timespent, source, learningdatestart, inprogress, completiondate], (error, data) => {
+        if (error) throw error;
+        console.dir(data.rows);
+        callback(data.rowCount);
+    })
+}
 
-module.exports = {getTopics, getTopic};
+
+module.exports = {getTopics, getTopic, insertTopic};
