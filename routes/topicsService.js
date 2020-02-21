@@ -16,9 +16,18 @@ const allas = new Pool(conopts);
 
 const getTopics = (callback) => {
     allas.query("SELECT * FROM topics", (error, data) => {
-        console.dir(error);
-        callback(data.rows); //pelkästään (data) tulee tyhjää
+        //console.dir(error);
+        callback(data.rows);
     })
 }
 
-module.exports = {getTopics};
+const getTopic = (id, callback) => {
+    allas.query("SELECT * FROM topics where id =$1", [id], (error, data) => {
+        if (error) throw error;
+        console.dir(data.rows);
+        callback(data.rows);
+    })
+}
+
+
+module.exports = {getTopics, getTopic};
