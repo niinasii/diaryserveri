@@ -38,6 +38,15 @@ const insertTopic = (newtopic, callback) => {
     })
 }
 
+const updateTopic = (topic, id, callback) => {
+    const { title, description, timetomaster, timespent, source, learningdatestart, inprogress, completiondate } = topic;
+    allas.query("UPDATE topics SET title=$1, description=$2, timetomaster=$3, timespent=$4, source=$5, learningdatestart=$6, inprogress=$7, completiondate=$8 WHERE id=$9", [title, description, timetomaster, timespent, source, learningdatestart, inprogress, completiondate, id], (error, data) => {
+        if (error) throw error;
+        console.dir(data.rows);
+        callback(data.rowCount);
+    })
+}
+
 const deleteTopics = (callback) => {
     allas.query("DELETE FROM topics", (error, data) => {
         //console.dir(error);
@@ -53,4 +62,4 @@ const deleteTopic = (id, callback) => {
     })
 }
 
-module.exports = {getTopics, getTopic, insertTopic, deleteTopic, deleteTopics};
+module.exports = {getTopics, getTopic, insertTopic, updateTopic, deleteTopic, deleteTopics};

@@ -30,6 +30,15 @@ router.route('/topics/:id')
       res.json(rows);
     });
   })
+  .put(function (req, res, next) {
+    ts.updateTopic(req.body, req.params.id, (rowCount) => {
+      if (rowCount > 0)
+        res.status(200).json({ message: 'Updated' });
+      else {
+        res.status(400).json({ message: 'Failed to update' });
+      }
+    });
+  })
   .delete(function (req, res, next) {
     ts.deleteTopic(req.params.id, (rowCount) => {
       if (rowCount > 0)
